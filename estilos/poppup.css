@@ -1,0 +1,39 @@
+/* Estilos personalizados para el popup de Leaflet */
+.leaflet-popup-content-wrapper {
+    background: linear-gradient(145deg, #f9f9f9, #e6e6e6); /* Fondo con un ligero gradiente */
+    border-radius: 12px;                                    /* Bordes redondeados */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);             /* Sombra más fuerte */
+    font-family: 'Roboto', 'Arial', sans-serif;             /* Tipografía moderna */
+    padding: 12px;                                          /* Espaciado interno */
+}
+
+.leaflet-popup-content {
+    font-size: 13px;                                        /* Tamaño de fuente ajustado */
+    color: #2e3d49;                                         /* Color del texto */
+}
+
+/* Destacar los títulos */
+.leaflet-popup-content strong {
+    font-weight: 600;                                       /* Negrita más fuerte */
+    color: black;                                         /* Color azul oscuro */
+    font-size: 14px;                                        /* Tamaño de fuente ligeramente mayor */
+}
+
+.leaflet-popup-tip {
+    background: #e6e6e6;                                    /* Color de la chincheta */
+}
+
+.leaflet-popup-close-button {
+    color: #4a5568;                                         /* Color del botón de cerrar */
+    font-size: 16px;                                        /* Tamaño del botón de cerrar */
+    font-weight: bold;                                      /* Botón en negrita */
+}
+
+.leaflet-popup-content-wrapper a {
+    color: #3182ce;                                         /* Estilo de los enlaces dentro del popup */
+    text-decoration: none;
+}
+
+.leaflet-popup-content-wrapper a:hover {
+    color: #2b6cb0;                                         /* Hover para enlaces */
+}

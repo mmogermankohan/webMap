@@ -1,0 +1,81 @@
+/* Contenedor principal del control de capas */
+.leaflet-control-layers {
+    position: fixed;
+    bottom: 10px; /* Ajustado a la parte inferior */
+    right: 10px; /* Cambiado a la derecha */
+    width: 50px; /* Ancho inicial del contenedor colapsado */
+    height: 98vh; /* Altura del contenedor (90% del alto de la ventana) */
+    height: 98dvh; /* Altura del contenedor (90% del alto de la ventana) */
+    /*dvh = dinamic viewport height - adapta dinamicamente la altura según el dispositivo
+    si dvh no es soportado por el navegador, lo omite y utiliza "vh"*/
+    background-color: rgba(42, 59, 71, 0.6) !important; /* Fondo con transparencia del 60% */
+    border-radius: 50px !important; /* Bordes redondeados */
+    overflow: hidden;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada */
+    transition: width 0.3s ease; /* Transición suave para el ancho */
+    z-index: 1000;
+    cursor: pointer; /* El cursor cambia para indicar que es clicable */
+}
+
+/* Cuando el mouse pasa sobre el contenedor, se expande */
+.leaflet-control-layers:hover {
+    width: 300px; /* Ancho expandido del contenedor */
+}
+
+/* Estilos para el listado interno de capas */
+.leaflet-control-layers-list {
+    padding: 10px;
+    padding-top: 50px;
+    overflow-y: hidden; /* Scroll si el contenido es demasiado largo */
+    overflow-x: hidden;
+}
+
+/* Efecto hover para cada capa de la lista */
+.leaflet-control-layers-list label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    background-color: rgba(42, 59, 71, 0.6);
+    color: #A0A7AC;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+/* Efecto hover sobre cada capa de la lista */
+.leaflet-control-layers-list label:hover {
+    background-color: palevioletred; /* Color al pasar el mouse */
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2); /* Sombra al pasar el mouse */
+}
+
+/* Estilo del checkbox acorde al elemento */
+.leaflet-control-layers-list input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    accent-color: palevioletred; /* Color de activación del checkbox */
+}
+
+/* Todo el contenedor es clicable */
+.leaflet-control-layers-list label input {
+    pointer-events: none; /* Deshabilita el clic solo en el checkbox para hacerlo en toda la fila */
+}
+
+/* Estilo para los títulos (checkboxes) */
+.leaflet-control-layers-list label span {
+    font-size: 14px;
+    font-weight: bold;
+    color: white; /* Color de los textos */
+}
+
+/* Aumentar el border-radius de los elementos en modo colapsado */
+.leaflet-control-layers {
+    border-radius: 50px; /* Bordes redondeados en modo colapsado */
+}
+
+/* Ajustar los bordes del contenedor */
+.leaflet-control-layers:hover {
+    border: none; /* Quitamos el borde al expandir */
+}
