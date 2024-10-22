@@ -11,7 +11,7 @@ let osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // Creamos las capas WMS
-let chacras = L.tileLayer.wms("http://localhost:8080/geoserver/Barranqueras/wms?", {
+let chacras = L.tileLayer.wms("http://172.16.1.58:8080/geoserver/Barranqueras/wms?", {
     layers: "chacras84",
     format: 'image/png',
     transparent: true,
@@ -19,7 +19,7 @@ let chacras = L.tileLayer.wms("http://localhost:8080/geoserver/Barranqueras/wms?
     attribution: "DPDyVI"
 }).addTo(map);
 
-let manzanas = L.tileLayer.wms("http://localhost:8080/geoserver/Barranqueras/wms?", {
+let manzanas = L.tileLayer.wms("http://172.16.1.58:8080/geoserver/Barranqueras/wms?", {
     layers: "mz",
     format: 'image/png',
     transparent: true,
@@ -27,7 +27,7 @@ let manzanas = L.tileLayer.wms("http://localhost:8080/geoserver/Barranqueras/wms
     attribution: "DPDyVI"
 }).addTo(map);
 
-let parcelas = L.tileLayer.wms("http://localhost:8080/geoserver/Barranqueras/wms?", {
+let parcelas = L.tileLayer.wms("http://172.16.1.58:8080/geoserver/Barranqueras/wms?", {
     layers: "parcelas84",
     format: 'image/png',
     transparent: true,
@@ -50,7 +50,7 @@ let overlays = {
 L.control.layers(mapaBase, overlays).addTo(map);
 
 // URL para obtener la capa GeoJSON de GeoServer
-const geojsonUrl = "http://localhost:8080/geoserver/Barranqueras/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Barranqueras%3Aparcelas84&outputFormat=application%2Fjson";
+const geojsonUrl = "http://172.16.1.58:8080/geoserver/Barranqueras/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=Barranqueras%3Aparcelas84&outputFormat=application%2Fjson";
 
 // Variable para almacenar la capa GeoJSON
 let geojsonLayer;
@@ -59,14 +59,14 @@ let geojsonLayer;
 fetch(geojsonUrl)
     .then(response => response.json())
     .then(data => {
-        console.log("GeoJSON de Parcelas:", data); // Muestra la información del GeoJSON
+        //console.log("GeoJSON de Parcelas:", data); // Muestra la información del GeoJSON
 
         // Estilos para las parcelas
         geojsonLayer = L.geoJson(data, {
             style: {
                 color: 'black',      // Color del borde
                 fillColor: 'black',  // Color de relleno
-                fillOpacity: 0.2,     // Opacidad del relleno
+                fillOpacity: 0.2,    // Opacidad del relleno
             },
 
             // Información en el popup y etiquetas para cada parcela
@@ -98,8 +98,8 @@ fetch(geojsonUrl)
             propertyName: 'catastro',      // El atributo que queremos buscar
             zoom: 18,                     // Zoom base cuando se encuentra un resultado
             moveToLocation: function (latlng, title, map) {
-                console.log("Ubicación encontrada:", latlng); // Muestra las coordenadas encontradas
-                console.log("Título del elemento:", title);   // Muestra el título (catastro)
+                //console.log("Ubicación encontrada:", latlng); // Muestra las coordenadas encontradas
+                //console.log("Título del elemento:", title);   // Muestra el título (catastro)
 
                 // Ajustar el nivel de zoom cuando se hace clic en el resultado
                 const zoomLevel = 21; // Ajusta el nivel de zoom si es necesario
@@ -111,9 +111,30 @@ fetch(geojsonUrl)
                 if (foundLayer) {
                     // Abrir automáticamente el popup del elemento encontrado
                     foundLayer.openPopup();
+
+                    // Añadir clase CSS para la animación flash
+                    let layerElement = foundLayer.getElement();
+                    if (layerElement) {
+                        layerElement.classList.add('animated-flash');
+                        // Remover la clase después de la animación para que se quede fijo en #3f0
+                        setTimeout(() => {
+                            foundLayer.setStyle({
+                                color: '#3f0',     // Color final del borde
+                                fillColor: '#3f0'  // Color final del relleno
+                            });
+                            layerElement.classList.remove('animated-flash');
+                        }, 1000); // Duración de 2 repeticiones (0.5s * 2)
+                    }
                 }
             },
             marker: false // No mostrar el marcador por defecto
+        });
+
+        // Evento para restaurar los colores originales al colapsar la búsqueda
+        searchControl.on('search:collapsed', function () {
+            geojsonLayer.eachLayer(function (layer) {
+                geojsonLayer.resetStyle(layer); // Restaurar el estilo original
+            });
         });
 
         // Añadimos el control de búsqueda al mapa

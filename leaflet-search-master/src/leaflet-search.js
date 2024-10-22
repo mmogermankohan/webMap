@@ -400,7 +400,7 @@
     _defaultFilterData: function (text, records) {
       const frecords = {}
 
-      text = text.replace(new RegExp('[.*+?^${}()|[\]\\]','g'), '')
+      text = text.replace(new RegExp('[.*+?^${}()|[\]\\]', 'g'), '')
       // sanitize remove all special characters
 
       if (text === '') {
