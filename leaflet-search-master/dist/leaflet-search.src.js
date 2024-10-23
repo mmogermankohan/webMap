@@ -87,18 +87,18 @@
       minLength: 1, // minimal text length for autocomplete
       initial: true, // search elements only by initial text
       casesensitive: false, // search elements in case sensitive text
-      autoType: true, // complete input with first suggested result and select this filled-in text.
+      autoType: false, // complete input with first suggested result and select this filled-in text.
       delayType: 400, // delay while typing for show tooltip
       tooltipLimit: -1, // limit max results to show in tooltip. -1 for no limit, 0 for no results
       tipAutoSubmit: true, // auto map panTo when click on tooltip
       firstTipSubmit: false, // auto select first result con enter click
       autoResize: true, // autoresize on input change
-      collapsed: true, // collapse search control at startup
+      collapsed: false, // collapse search control at startup
       autoCollapse: false, // collapse search control after submit(on button or on tips if enabled tipAutoSubmit)
       autoCollapseTime: 1200, // delay for autoclosing alert and collapse after blur
-      textErr: 'Location not found', // error message
-      textCancel: 'Cancel', // title in cancel button
-      textPlaceholder: 'Search...', // placeholder value
+      textErr: 'No existe', // error message
+      textCancel: 'Cancelar', // title in cancel button
+      textPlaceholder: 'Buscar nomenclatura', // placeholder value
       hideMarkerOnCollapse: false, // remove circle and marker on search control collapsed
       position: 'topleft',
       marker: { // custom L.Marker or false for hide
@@ -416,7 +416,7 @@
     _defaultFilterData: function (text, records) {
       const frecords = {}
 
-      text = text.replace(new RegExp('[.*+?^${}()|[\]\\]','g'), '')
+      text = text.replace(new RegExp('[.*+?^${}()|[\]\\]', 'g'), '')
       // sanitize remove all special characters
 
       if (text === '') {
@@ -567,7 +567,7 @@
           loc.layer = layer
           retRecords[self._getPath(layer.feature.properties, propName)] = loc
         } else {
-          
+
         }
       } else if (layer instanceof L.Path || layer instanceof L.Polyline || layer instanceof L.Polygon) {
         if (self._getPath(layer.options, propName)) {
@@ -579,7 +579,7 @@
           loc.layer = layer
           retRecords[self._getPath(layer.feature.properties, propName)] = loc
         } else {
-          
+
         }
       } else if (Object.prototype.hasOwnProperty.call(layer, 'feature')) { // GeoJSON
         if (Object.prototype.hasOwnProperty.call(layer.feature.properties, propName)) {
@@ -592,10 +592,10 @@
             loc.layer = layer
             retRecords[layer.feature.properties[propName]] = loc
           } else {
-            
+
           }
         } else {
-          
+
         }
       } else if (layer instanceof L.LayerGroup) {
         layer.eachLayer(function (layer) {

@@ -1,136 +1,172 @@
-/* 
- * Leaflet Control Search v3.0.10 - 2023-08-08 
- * 
- * Copyright 2023 Stefano Cudini 
- * stefano.cudini@gmail.com 
- * https://opengeo.tech/ 
- * 
- * Licensed under the MIT license. 
- * 
- * Demo: 
- * https://opengeo.tech/maps/leaflet-search/ 
- * 
- * Source: 
- * git@github.com:stefanocudini/leaflet-search.git 
- * 
- */
- 
+/* Contenedor del control de búsqueda. Se coloca fijo, centrado horizontalmente en la parte inferior */
 .leaflet-container .leaflet-control-search {
-	position:relative;
-	float:left;
-	background:#fff;
-	color:#1978cf;
-	border: 2px solid rgba(0,0,0,0.2);
-	background-clip: padding-box;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-	background-color: rgba(255, 255, 255, 0.8);
-	z-index:1000;	
-	margin-left: 10px;
-	margin-top: 10px;
+    position: fixed; /* Posición fija */
+    left: 50%; /* Centrar horizontalmente */
+    bottom: 0; /* Al borde inferior */
+    transform: translateX(-50%); /* Ajuste para centrar */
+    background: rgba(0, 0, 0, 0.7); /* Fondo con transparencia del 70% */
+    color: #1978cf;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    background-clip: padding-box;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    z-index: 1000;
+    margin: 10px 0; /* Ajuste para el margen inferior */
+    width: 350px; /* Ancho del input */
+    height: 45px; /* Altura del contenedor */
+    opacity: 1; /* Asegurar que es visible */
 }
-.leaflet-control-search.search-exp {/*expanded*/
-	background: #fff;
-	border: 2px solid rgba(0,0,0,0.2);
-	background-clip: padding-box;	
+
+/* Cuando el control de búsqueda está expandido */
+.leaflet-control-search.search-exp {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.7); /* Fondo con transparencia del 70% */
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    background-clip: padding-box;
+    width: 320px; /* Ancho del input */
+    border-radius: 16px; /* Bordes redondeados */
+    padding: 10px;
 }
+
+/* Estilo del campo de entrada (input) */
 .leaflet-control-search .search-input {
-	display:block;
-	float:left;
-	background: #fff;
-	border:1px solid #666;
-	border-radius:2px;
-	height:22px;
-	padding:0 20px 0 2px;
-	margin:4px 0 4px 4px;
+    display: block;
+    float: left;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    font-weight: 100;
+    background: #000; /* Color de fondo negro */
+    border: 1px solid #666;
+    border-radius: 6px;
+    height: 25px; /* Altura del input */
+    padding: 0 20px 0 2px;
+    margin: 4px 0 4px 4px;
+    color: #fff; /* Color del texto blanco */
+    width: 250px; /* Ancho del input */
+    opacity: 0.7; /* Transparencia del 70% */
+    font-size: large;
 }
-.leaflet-control-search.search-load .search-input {
-	background: url('../images/loader.gif') no-repeat center right #fff;
+
+/* Placeholder del input */
+.leaflet-control-search .search-input::placeholder {
+    color: white; /* Color del placeholder blanco */
+    opacity: 1; /* Mantener la opacidad del texto del placeholder */
 }
-.leaflet-control-search.search-load .search-cancel {
-	visibility:hidden;
-}
+
+/* Botón de cancelar búsqueda (escondido en este caso) */
 .leaflet-control-search .search-cancel {
-	display:block;
-	width:22px;
-	height:22px;
-	position:absolute;
-	right:28px;
-	margin:6px 0;
-	background: url('../images/search-icon.png') no-repeat 0 -46px;
-	text-decoration:none;
-	filter: alpha(opacity=80);
-	opacity: 0.8;		
+    display: none; /*block si queremos que se active*/
+    visibility: hidden; /* Comentar si queremos que se vea */
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    right: 28px;
+    margin: 6px 0;
+    background: url('../images/magnifying-glass-location-solid.svg') no-repeat 0 -46px;
+    text-decoration: none;
+    filter: alpha(opacity=80);
+    opacity: 0.8;
+    background-color: #ffffff;
 }
+
+/* Hover sobre el botón de cancelar búsqueda */
 .leaflet-control-search .search-cancel:hover {
-	filter: alpha(opacity=100);
-	opacity: 1;
+    filter: alpha(opacity=100);
+    opacity: 1;
 }
-.leaflet-control-search .search-cancel span {
-	display:none;/* comment for cancel button imageless */
-	font-size:18px;
-	line-height:20px;
-	color:#ccc;
-	font-weight:bold;
-}
-.leaflet-control-search .search-cancel:hover span {
-	color:#aaa;
-}
+
+/* Estilo del botón de búsqueda (icono) */
 .leaflet-control-search .search-button {
-	display:block;
-	float:left;
-	width:30px;
-	height:30px;	
-	background: url('../images/search-icon.png') no-repeat 4px 4px #fff;
-	border-radius:4px;
+    display: block;
+    float: left;
+    width: 30px;
+    height: 30px;
+    background: url('../images/magnifying-glass-location-solid.svg') no-repeat 4px 4px #00000000;
+    border-radius: 4px;
+    margin-left: 10px;
 }
-.leaflet-control-search .search-button:hover {
-	background: url('../images/search-icon.png') no-repeat 4px -20px #fafafa;
-}
+
+/* Estilos para el tooltip (caja de sugerencias de búsqueda) */
 .leaflet-control-search .search-tooltip {
-	position:absolute;
-	top:100%;
-	left:0;
-	float:left;
-	list-style: none;
-	padding-left: 0;
-	min-width:120px;
-	max-height:122px;
-	box-shadow: 1px 1px 6px rgba(0,0,0,0.4);
-	background-color: rgba(0, 0, 0, 0.25);
-	z-index:1010;
-	overflow-y:auto;
-	overflow-x:hidden;
-	cursor: pointer;
+    position: absolute;
+    bottom: 100%; /* Posición de la caja respecto al input */
+    float: left;
+    list-style: none;
+    padding-left: 0;
+    min-width: 300px;
+    max-height: 122px;
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.25);
+    z-index: 1010;
+    overflow-y: auto; /* Scroll vertical */
+    overflow-x: hidden; /* Sin scroll horizontal */
+    cursor: pointer;
+
+    /* Inicialmente oculto o no visible (opacidad y desplazamiento) */
+    opacity: 0;
+    transform: translateY(10px); /* Desplazado hacia abajo */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Transición suave */
 }
-.leaflet-control-search .search-tip {
-	margin:2px;
-	padding:2px 4px;
-	display:block;
-	color:black;
-	background: #eee;
-	border-radius:.25em;
-	text-decoration:none;	
-	white-space:nowrap;
-	vertical-align:middle;
+
+/* Cuando el usuario pasa el mouse sobre el input de búsqueda, muestra el tooltip */
+.leaflet-control-search:hover .search-tooltip {
+    opacity: 1; /* Mostrar el tooltip con opacidad completa */
+    transform: translateY(0); /* Volver a la posición normal */
 }
-.leaflet-control-search .search-button:hover {
-	background-color: #f4f4f4;
-}
+
+
+/* Al hacer hover o seleccionar una sugerencia */
 .leaflet-control-search .search-tip-select,
 .leaflet-control-search .search-tip:hover {
-	background-color: #fff;
+    background-color: rgba(0, 0, 0, 0.7);
+	
 }
+
+/* Estilo para los tips del buscador (sugerencias predictivas) */
+.leaflet-control-search .search-tip {
+    font-size: large;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    margin: 2px;
+    padding: 2px 4px;
+    display: block;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: .25em;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+/* Estilo para el scrollbar de la caja de búsqueda */
+*::-webkit-scrollbar {
+    width: 5px;
+    border-radius: 4px;
+	scroll-behavior: smooth;
+}
+
+*::-webkit-scrollbar-track {
+    background-color: #343a40;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: palevioletred;
+    border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: #888;
+}
+
+/* Mensajes de alerta del control de búsqueda */
 .leaflet-control-search .search-alert {
-	cursor:pointer;
-	clear:both;
-	font-size:.75em;
-	margin-bottom:5px;
-	padding:0 .25em;
-	color:#e00;
-	font-weight:bold;
-	border-radius:.25em;
+    cursor: pointer;
+    clear: both;
+    font-size: .75em;
+    margin-bottom: 5px;
+    padding: 0 .25em;
+    color: #e00;
+    font-weight: bold;
+    border-radius: .25em;
 }
-
-

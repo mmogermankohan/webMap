@@ -3,12 +3,26 @@ var map = L.map('map', {
     zoomControl: false,
     center: [-27.482860, -58.936142], // Coordenadas de Barranqueras
     zoom: 13,
+    maxZoom: 21
 });
 
-// Agregamos el mapa base de OpenStreetMap
-let osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+// Agregamos el mapa bases 
+let sinBase = L.tileLayer('', {
+    maxZoom: 21
 }).addTo(map);
+
+let osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 21
+}).addTo(map);
+
+let cartoDark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    maxZoom: 21
+}).addTo(map);
+
+let googleMaps = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+    maxZoom: 21
+}).addTo(map);
+
 
 // Creamos las capas WMS
 let chacras = L.tileLayer.wms("http://172.16.1.58:8080/geoserver/Barranqueras/wms?", {
@@ -16,7 +30,8 @@ let chacras = L.tileLayer.wms("http://172.16.1.58:8080/geoserver/Barranqueras/wm
     format: 'image/png',
     transparent: true,
     version: '1.1.1',
-    attribution: "DPDyVI"
+    attribution: "DPDyVI",
+    maxZoom: 21
 }).addTo(map);
 
 let manzanas = L.tileLayer.wms("http://172.16.1.58:8080/geoserver/Barranqueras/wms?", {
@@ -24,7 +39,8 @@ let manzanas = L.tileLayer.wms("http://172.16.1.58:8080/geoserver/Barranqueras/w
     format: 'image/png',
     transparent: true,
     version: '1.1.1',
-    attribution: "DPDyVI"
+    attribution: "DPDyVI",
+    maxZoom: 21
 }).addTo(map);
 
 let parcelas = L.tileLayer.wms("http://172.16.1.58:8080/geoserver/Barranqueras/wms?", {
@@ -33,11 +49,15 @@ let parcelas = L.tileLayer.wms("http://172.16.1.58:8080/geoserver/Barranqueras/w
     transparent: true,
     version: '1.1.1',
     attribution: "DPDyVI",
+    maxZoom: 21
 }).addTo(map);
 
 // Añadimos la capa base al control
 let mapaBase = {
-    'OpenStreetMap': osm
+    'Sin base': sinBase,
+    'OpenStreetMap': osm,
+    'Modo Oscuro': cartoDark,
+    'Google Maps': googleMaps,
 };
 
 let overlays = {
@@ -45,6 +65,7 @@ let overlays = {
     'Manzanas': manzanas,
     'Parcelas': parcelas,
 };
+
 
 // Control de capas
 L.control.layers(mapaBase, overlays).addTo(map);
@@ -55,6 +76,49 @@ const geojsonUrl = "http://172.16.1.58:8080/geoserver/Barranqueras/ows?service=W
 // Variable para almacenar la capa GeoJSON
 let geojsonLayer;
 
+// Función para cambiar el color de las parcelas según la capa base seleccionada
+function updateParcelStyle(baseLayerName) {
+    let color, fillColor;
+
+    // Cambia los colores según el nombre de la capa base seleccionada
+    switch (baseLayerName) {
+        case 'OpenStreetMap':
+            color = 'gray';
+            fillColor = 'gray';
+            break;
+        case 'Modo Oscuro':
+            color = 'white';
+            fillColor = 'white';
+            break;
+        case 'Google Maps':
+            color = '#ffee00ad';
+            fillColor = 'yellow';
+            break;
+        case 'Sin base':
+            color = 'black'; // Puedes definir otro color si es necesario
+            fillColor = 'black';
+            break;
+        default:
+            color = 'gray';
+            fillColor = 'gray';
+    }
+
+    // Actualiza el estilo de las parcelas
+    if (geojsonLayer) {
+        geojsonLayer.setStyle({
+            color: color,
+            fillColor: fillColor,
+            fillOpacity: 0
+        });
+    }
+}
+
+// Escuchar cambios en la capa base y actualizar el estilo de las parcelas
+map.on('baselayerchange', function (event) {
+    updateParcelStyle(event.name); // Pasa el nombre de la capa base al cambiar
+});
+
+
 // Cargamos el GeoJSON desde GeoServer y lo añadimos al mapa
 fetch(geojsonUrl)
     .then(response => response.json())
@@ -64,8 +128,8 @@ fetch(geojsonUrl)
         // Estilos para las parcelas
         geojsonLayer = L.geoJson(data, {
             style: {
-                color: 'black',      // Color del borde
-                fillColor: 'black',  // Color de relleno
+                color: 'gray',      // Color del borde
+                fillColor: 'gray',  // Color de relleno
                 fillOpacity: 0.2,    // Opacidad del relleno
             },
 
@@ -143,3 +207,5 @@ fetch(geojsonUrl)
     .catch(error => {
         console.error("Error cargando el GeoJSON:", error); // Muestra el error si algo falla
     });
+
+
