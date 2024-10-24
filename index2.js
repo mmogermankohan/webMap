@@ -118,6 +118,36 @@ map.on('baselayerchange', function (event) {
     updateParcelStyle(event.name); // Pasa el nombre de la capa base al cambiar
 });
 
+//HERRAMIENTAS DE DIBUJO
+// Configuramos Leaflet Draw
+var drawnItems = new L.FeatureGroup();
+map.addLayer(drawnItems);
+
+var drawControl = new L.Control.Draw({
+    edit: {
+        featureGroup: drawnItems
+    },
+    draw: {
+        polygon: true, // Habilitamos solo la opción de dibujar polígonos
+        polyline: true,
+        rectangle: true,
+        circle: true,
+        marker: true,
+        circlemarker: true
+    }
+});
+map.addControl(drawControl);
+
+// Escuchamos el evento 'draw:created' para añadir el polígono al mapa
+map.on(L.Draw.Event.CREATED, function (event) {
+    var layer = event.layer;
+    drawnItems.addLayer(layer);  // Añadimos el polígono al grupo
+});
+
+
+
+
+
 
 // Cargamos el GeoJSON desde GeoServer y lo añadimos al mapa
 fetch(geojsonUrl)
@@ -207,5 +237,3 @@ fetch(geojsonUrl)
     .catch(error => {
         console.error("Error cargando el GeoJSON:", error); // Muestra el error si algo falla
     });
-
-
