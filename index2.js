@@ -95,7 +95,7 @@ function updateParcelStyle(baseLayerName) {
             fillColor = 'yellow';
             break;
         case 'Sin base':
-            color = 'black'; // Puedes definir otro color si es necesario
+            color = 'black';
             fillColor = 'black';
             break;
         default:
@@ -145,10 +145,6 @@ map.on(L.Draw.Event.CREATED, function (event) {
 });
 
 
-
-
-
-
 // Cargamos el GeoJSON desde GeoServer y lo añadimos al mapa
 fetch(geojsonUrl)
     .then(response => response.json())
@@ -176,6 +172,24 @@ fetch(geojsonUrl)
                         "<strong>Polígono:</strong> " + feature.properties.poligono + "</br>" +
                         "<strong>Observaciones:</strong> " + feature.properties.obs
                     );
+                    // Agregar el evento 'click' para resaltar el elemento seleccionado
+                    layer.on('click', function () {
+                        // Restablecer el estilo de todas las capas al color inicial
+                        geojsonLayer.eachLayer(function (layer) {
+                            layer.setStyle({
+                                color: 'gray',
+                                fillColor: 'gray',
+                                fillOpacity: 0.2,
+                            });
+                        });
+
+                        // Cambiar el estilo del elemento clicado
+                        layer.setStyle({
+                            color: '#3f0',       // Color del borde seleccionado
+                            fillColor: '#3f0',   // Color de relleno seleccionado
+                            fillOpacity: 0.3,    // Opacidad del relleno seleccionado
+                        });
+                    });
                 }
             }
         }).addTo(map);
@@ -230,10 +244,11 @@ fetch(geojsonUrl)
                 geojsonLayer.resetStyle(layer); // Restaurar el estilo original
             });
         });
-
         // Añadimos el control de búsqueda al mapa
         map.addControl(searchControl);
     })
+
+
     .catch(error => {
         console.error("Error cargando el GeoJSON:", error); // Muestra el error si algo falla
     });
