@@ -2,7 +2,7 @@
 .leaflet-control-layers {
     position: fixed;
     bottom: 10px; /* Ajustado a la parte inferior */
-    right: 10px; /* Cambiado a la derecha */
+    left: 10px; /* Cambiado a la derecha */
     width: 50px; /* Ancho inicial del contenedor colapsado */
     height: 98vh; /* Altura del contenedor (90% del alto de la ventana) */
     height: 98dvh; /* Altura del contenedor (90% del alto de la ventana) */
@@ -12,7 +12,7 @@
     border-radius: 50px !important; /* Bordes redondeados */
     overflow: hidden;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada */
-    transition: width 0.3s ease; /* Transición suave para el ancho */
+    transition: width 0.3s ease, border-radius 0.3s ease, box-shadow 0.3s ease; /* Transición suave para el ancho */
     z-index: 1000;
     cursor: pointer; /* El cursor cambia para indicar que es clicable */
 }

@@ -170,3 +170,22 @@
     font-weight: bold;
     border-radius: .25em;
 }
+
+
+/*Animación de pulso para el contenedor*/
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 palevioletred; /* Sin sombra al inicio */
+    }
+    50% {
+        box-shadow: 0 0 0 2px palevioletred; /* Sombra azul al 100% */
+    }
+    100% {
+        box-shadow: 0 0 0 palevioletred; /* Sin sombra al final */
+    }
+}
+
+/* Aplicar la animación al contenedor del buscador */
+.leaflet-control-search {
+    animation: pulse 4s infinite; /* Aplicar la animación de pulso de 4 segundos */
+}

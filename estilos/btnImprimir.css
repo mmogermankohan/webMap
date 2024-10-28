@@ -1,0 +1,48 @@
+.leaflet-control-button {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    cursor: pointer;
+    z-index: 1000; /* Asegúrate de que esté por encima de otras capas */
+}
+
+.leaflet-control-button button {
+    border: none;
+    background: transparent;
+    font-size: 14px;
+}
+.print-button {
+    background-color: #ffcc00; /* Color de fondo */
+    border: none; /* Sin borde */
+    padding: 10px; /* Espaciado */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar cursor al pasar el ratón */
+}
+
+.print-button:hover {
+    background-color: #ff9900; /* Color al pasar el ratón */
+}
+
+/* Ajustes para impresión en tamaño A4 */
+@media print {
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 841mm; /* Tamaño A4 */
+        height: 594mm; /* Tamaño A4 */
+        overflow: hidden;
+    }
+
+    .contenedor {
+        transform-origin: top left;
+        /* Escala para encajar viewport completo en una hoja A4 */
+        transform: scale(1); /* Ajusta según el contenido */
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+}

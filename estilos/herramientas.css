@@ -1,31 +1,35 @@
-/* Contenedor padre de las herramientas */
+/* Colocar el DrawControl en la esquina superior derecha sin solapamiento */
 .leaflet-draw-toolbar {
+    position: fixed;
+    top: 10px; /* Separado 10px del borde superior */
+    right: 10px; /* Separado 10px del borde derecho */
     display: flex;
-    justify-items: center;
-    position: top; /* Cambiado a fixed */
-    bottom: 10px;
-    left: 50px; /* Separado 50px del margen izquierdo */
     flex-direction: column;
-    background-color: rgba(0, 0, 0, 0.75); /* Color de fondo oscuro con opacidad */
-    padding: 10px; /* Padding de 5px */
-    border-radius: 16px; /* Bordes redondeados */
+    background-color: rgba(0, 0, 0, 0.75); /* Fondo oscuro con opacidad */
+    padding: 10px;
+    border-radius: 16px;
+    z-index: 1000;
+    gap: 5px; /* Espacio entre los botones internos para evitar solapamiento */
+    margin-top: 35px;
 }
+
 
 /* Espacio entre los íconos */
 .leaflet-draw-toolbar a {
-    background-color: rgba(255, 255, 255, 0.9); /* Color negro con opacidad del 90% */
+    background-color: rgba(255, 255, 255, 0.9); /* Color blanco con opacidad */
     border-color: transparent; /* Sin borde */
     color: white; /* Color del ícono blanco */
+    margin: 5px 0; /* Espacio vertical entre los botones */
 }
 
 /* Hover sobre los botones */
 .leaflet-draw-toolbar a:hover {
-    background-color: palevioletred; /* Hover con color palevioletred */
+    background-color: palevioletred; /* Color palevioletred al pasar el mouse */
 }
 
 /* Íconos adicionales (por ejemplo, editar y borrar) */
 .leaflet-draw-edit-remove a {
-    background-color: rgba(0, 0, 0, 0.9); /* Mismo estilo para los botones de editar y borrar */
+    background-color: rgba(0, 0, 0, 0.9); /* Fondo oscuro con opacidad */
     color: white;
 }
 
@@ -34,23 +38,39 @@
     background-color: palevioletred;
 }
 
-
-/* Herramienta de medición*/
+/* Herramienta de medición */
 .leaflet-control-measure {
     background-color: rgba(0, 0, 0, 0.75);
     border-radius: 5px;
     padding: 5px;
-    z-index: 1000; /* Asegúrate de que tenga un z-index alto */
+    z-index: 1000; /* Aseguramos que tenga un z-index alto */
 }
 
 .leaflet-control-measure a {
-    color: white; /* Asegúrate de que el color sea visible */
+    color: white; /* Color de los íconos de la herramienta de medición */
     opacity: 0.9;
-    display: inline-block; /* Asegúrate de que sean elementos de bloque */
+    display: inline-block;
     margin: 5px; /* Espacio entre botones */
 }
 
 /* Hover */
 .leaflet-control-measure a:hover {
     color: palevioletred;
+}
+
+
+/* Ajuste para evitar solapamiento entre toolbars */
+.leaflet-draw-toolbar.leaflet-bar.leaflet-draw-toolbar-top {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    margin-bottom: 60px; /* Espacio inferior para evitar solapamiento con otras toolbars */
+    z-index: 1000;
+}
+
+.leaflet-draw-toolbar.leaflet-bar {
+    position: fixed;
+    top: 300px; /* Ajuste para estar debajo del primer toolbar */
+    right: 10px;
+    z-index: 1000;
 }
