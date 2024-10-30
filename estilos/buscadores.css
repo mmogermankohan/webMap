@@ -1,0 +1,15 @@
+/* Estilo para el contenedor de controles de búsqueda */
+.search-controls {
+    position: absolute;
+    bottom: 20px; /* Ajusta según sea necesario */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex; /* Usa flexbox para alinear los elementos en una fila */
+    gap: 10px; /* Espacio entre los controles */
+    z-index: 1000; /* Asegúrate de que esté por encima del mapa */
+}
+
+/* Estilo adicional para los inputs, si es necesario */
+.leaflet-control-search {
+    width: 200px; /* Ajusta el ancho según sea necesario */
+}

@@ -52,7 +52,7 @@
 	opacity: 1;
 }
 .leaflet-control-search .search-cancel span {
-	display:none;/* comment for cancel button imageless */
+	display:none;
 	font-size:18px;
 	line-height:20px;
 	color:#ccc;
@@ -97,7 +97,6 @@
 	border-radius:.25em;
 	text-decoration:none;	
 	white-space:nowrap;
-	vertical-align:middle;
 }
 .leaflet-control-search .search-button:hover {
 	background-color: #f4f4f4;

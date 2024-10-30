@@ -1,7 +1,7 @@
 /* Contenedor del control de búsqueda. Se coloca fijo, centrado horizontalmente en la parte inferior */
 .leaflet-container .leaflet-control-search {
     position: fixed; /* Posición fija */
-    left: 50%; /* Centrar horizontalmente */
+    left: calc(40% - 125px); /* Centrar horizontalmente */
     bottom: 0; /* Al borde inferior */
     transform: translateX(-50%); /* Ajuste para centrar */
     background: rgba(0, 0, 0, 0.7); /* Fondo con transparencia del 70% */
@@ -189,3 +189,4 @@
 .leaflet-control-search {
     animation: pulse 4s infinite; /* Aplicar la animación de pulso de 4 segundos */
 }
+

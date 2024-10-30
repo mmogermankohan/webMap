@@ -1,27 +1,45 @@
+/* Contenedor del botón de impresión */
 .leaflet-control-button {
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
     cursor: pointer;
-    z-index: 1000; /* Asegúrate de que esté por encima de otras capas */
+    box-shadow: #000000;
+    z-index: 1000;
 }
 
-.leaflet-control-button button {
-    border: none;
-    background: transparent;
-    font-size: 14px;
-}
+/* Botón de impresión */
 .print-button {
-    background-color: #ffcc00; /* Color de fondo */
-    border: none; /* Sin borde */
-    padding: 10px; /* Espaciado */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cambiar cursor al pasar el ratón */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.2s;
 }
 
+/* Hover */
 .print-button:hover {
-    background-color: #ff9900; /* Color al pasar el ratón */
+    background-color: #e6f7ff;
+    border-color: palevioletred;
+    transform: scale(1.15);
+}
+
+/* Icono */
+.print-button img {
+    width: 18px;
+    height: 18px;
+    filter: grayscale(1) brightness(1);
+    transition: filter 0.3s;
+}
+
+.print-button:hover img {
+    filter: none;
 }
 
 /* Ajustes para impresión en tamaño A4 */
@@ -46,3 +64,4 @@
         box-sizing: border-box;
     }
 }
+
